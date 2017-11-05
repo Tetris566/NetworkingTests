@@ -1,0 +1,8 @@
+﻿  CodeDrills.cpp
+c:\users\phazo\onedrive\documents\visual studio 2017\projects\codedrills\codedrills\codedrills.cpp(72): warning C4477: 'fprintf' : format string '%s' requires an argument of type 'char *', but variadic argument 1 has type 'WCHAR *'
+  c:\users\phazo\onedrive\documents\visual studio 2017\projects\codedrills\codedrills\codedrills.cpp(72): note: consider using '%ls' in the format string
+  c:\users\phazo\onedrive\documents\visual studio 2017\projects\codedrills\codedrills\codedrills.cpp(72): note: consider using '%lls' in the format string
+  c:\users\phazo\onedrive\documents\visual studio 2017\projects\codedrills\codedrills\codedrills.cpp(72): note: consider using '%Ls' in the format string
+  c:\users\phazo\onedrive\documents\visual studio 2017\projects\codedrills\codedrills\codedrills.cpp(72): note: consider using '%ws' in the format string
+  CodeDrills.vcxproj -> C:\Users\PHAZO\onedrive\documents\visual studio 2017\Projects\CodeDrills\Debug\CodeDrills.exe
+  CodeDrills.vcxproj -> C:\Users\PHAZO\onedrive\documents\visual studio 2017\Projects\CodeDrills\Debug\CodeDrills.pdb (Partial PDB)

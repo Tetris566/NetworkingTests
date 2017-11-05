@@ -1,0 +1,5 @@
+﻿  CodeDrills_Client.cpp
+c:\users\phazo\onedrive\documents\visual studio 2017\projects\codedrills_client\codedrills_client\codedrills_client.cpp(36): warning C4101: 'rv': unreferenced local variable
+c:\users\phazo\onedrive\documents\visual studio 2017\projects\codedrills_client\codedrills_client\codedrills_client.cpp(58): warning C4700: uninitialized local variable 'servinfo' used
+  CodeDrills_Client.vcxproj -> c:\users\phazo\onedrive\documents\visual studio 2017\Projects\CodeDrills_Client\Debug\CodeDrills_Client.exe
+  CodeDrills_Client.vcxproj -> c:\users\phazo\onedrive\documents\visual studio 2017\Projects\CodeDrills_Client\Debug\CodeDrills_Client.pdb (Partial PDB)
