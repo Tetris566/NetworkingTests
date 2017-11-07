@@ -9,7 +9,7 @@
 #include <ws2tcpip.h>
 #include <stdlib.h>
 #include <errno.h>
-#include <string.h>
+#include <string>
 #include <sys/types.h>
 
 #pragma comment(lib, "Ws2_32.lib")
@@ -17,6 +17,8 @@
 #define PORT "3490" // the port client will be connecting to 
 
 #define MAXDATASIZE 100 // max number of bytes we can get at once 
+
+using namespace std;
 
 // get sockaddr, IPv4 or IPv6:
 void *get_in_addr(struct sockaddr *sa)
@@ -45,8 +47,14 @@ int main(int argc, char *argv[])
 	int rv;
 	char s[INET6_ADDRSTRLEN];
 
-	std::string host = "localhost";
+	string host;
+	string username;
 
+	cout << "Enter username: ";
+	getline(cin, username);
+
+	cout << "Enter host: ";
+	getline(cin, host);
 
 	if (argc != 2) {
 		fprintf(stderr, "usage: client hostname\n");
@@ -54,11 +62,13 @@ int main(int argc, char *argv[])
 		exit(1);
 	}
 
+	Restart:
+
 	memset(&hints, 0, sizeof(hints));
 	hints.ai_family = AF_UNSPEC;
 	hints.ai_socktype = SOCK_STREAM;
 
-	if ((rv = getaddrinfo(argv[1], PORT, &hints, &servinfo)) != 0) {
+	if ((rv = getaddrinfo(host.c_str(), PORT, &hints, &servinfo)) != 0) {
 		fprintf(stderr, "getaddrinfo: %s\n", gai_strerror(rv));
 		system("pause");
 		return 1;
@@ -83,7 +93,15 @@ int main(int argc, char *argv[])
 
 	if (p == NULL) {
 		fprintf(stderr, "client: failed to connect\n");
-		system("pause");
+		char i;
+		cout << "Would you like to try again?" << '\n';
+		cin >> i;
+		if (i == 'y') {
+			goto Restart;
+		}
+		else if (i == 'n') {
+			return 0;
+		}
 		return 2;
 	}
 

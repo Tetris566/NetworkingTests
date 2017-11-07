@@ -63,6 +63,8 @@ int main()
 	char s[INET6_ADDRSTRLEN];
 	int rv;
 
+	std::string serverName = "SERVER";
+
 	memset(&hints, 0, sizeof hints);
 	hints.ai_family = AF_UNSPEC;
 	hints.ai_socktype = SOCK_STREAM;
@@ -125,13 +127,15 @@ int main()
 
 		closesocket(sockfd); // child doesn't need the listener
 
-		std::string input;
-		getline(std::cin, input);
+		std::string input = "Welcome to the server!";
 
 		if (send(new_fd, input.c_str() , 13, 0) == -1)perror("send");
-		closesocket(new_fd);
+		if (send(new_fd, serverName.c_str(), 13, 0) == -1)perror("send");
+
 		exit(0);
 	}
+
+	closesocket(new_fd);
 
 	return 0;
 
