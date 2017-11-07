@@ -5,8 +5,8 @@ CodeDrills_Client.cpp(72): warning C4477: 'fprintf' : format string '%s' require
   CodeDrills_Client.cpp(72): note: consider using '%Ls' in the format string
   CodeDrills_Client.cpp(72): note: consider using '%ws' in the format string
   Generating code
-  29 of 92 functions (31.5%) were compiled, the rest were copied from previous compilation.
-    1 functions were new in current compilation
-    10 functions had inline decision re-evaluated but remain unchanged
+  1 of 92 functions ( 1.1%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    0 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
   CodeDrills_Client.vcxproj -> C:\Users\AlexanderJoel\Documents\GitHub\NetworkingTests\CodeDrills_Client\Release\CodeDrills_Client.exe

@@ -16,7 +16,7 @@
 
 #define PORT "3490" // the port client will be connecting to 
 
-#define MAXDATASIZE 100 // max number of bytes we can get at once 
+#define MAXDATASIZE 256 // max number of bytes we can get at once 
 
 using namespace std;
 
@@ -117,6 +117,19 @@ int main(int argc, char *argv[])
 		exit(1);
 	}
 
+	while (1) {
+		RCV_LOOP:
+		if ((numbytes = recv(sockfd, buf, MAXDATASIZE - 1, 0)) == -1) {
+			perror("recv");
+			system("pause");
+			exit(1);
+		}
+
+		buf[numbytes] = '\0';
+
+		printf("client: received '%s'\n", buf);
+		goto RCV_LOOP;
+	}
 	buf[numbytes] = '\0';
 
 	printf("client: received '%s'\n", buf);

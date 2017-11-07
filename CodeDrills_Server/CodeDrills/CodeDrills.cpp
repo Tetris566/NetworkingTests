@@ -18,6 +18,8 @@
 
 #define BACKLOG 10     // how many pending connections queue will hold
 
+#define MAXDATASIZE 256 // max number of bytes we can get at once 
+
 void sigchld_handler(int s)
 {
 	// waitpid() might overwrite errno, so we save and restore it:
@@ -54,9 +56,12 @@ int main()
 
 #pragma endregion
 
-	int sockfd, new_fd;  // listen on sock_fd, new connection on new_fd
+	int sockfd, new_fd, numbytes;  // listen on sock_fd, new connection on new_fd
 	struct addrinfo hints, *servinfo, *p;
 	struct sockaddr_storage their_addr; // connector's address information
+
+	char buf[MAXDATASIZE];
+
 	socklen_t sin_size;
 	//struct sigaction sa;
 	int yes = 1;
@@ -127,15 +132,33 @@ int main()
 
 		closesocket(sockfd); // child doesn't need the listener
 
-		std::string input = "Welcome to the server!";
+		std::string WelcomeMSG = "Welcome to the server!";
 
-		if (send(new_fd, input.c_str() , 13, 0) == -1)perror("send");
-		if (send(new_fd, serverName.c_str(), 13, 0) == -1)perror("send");
+		if (send(new_fd, WelcomeMSG.c_str(), 30, 0) == -1) {
+			perror("send");
+		}
+		if (send(new_fd, serverName.c_str(), 30, 0) == -1) {
+			perror("send");
+		}
+		else {
+			break;
+		}
 
-		exit(0);
+	}
+
+	while (new_fd) {
+	MSG_SEND:
+		printf("Message: ");
+		std::string message = "";
+		std::getline(std::cin, message);
+		if (send(new_fd, message.c_str(), 30, 0) == -1)perror("send");
+		goto MSG_SEND;
 	}
 
 	closesocket(new_fd);
+
+	printf("User disconnected!\n");
+	system("pause");
 
 	return 0;
 
