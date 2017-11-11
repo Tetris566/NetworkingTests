@@ -6,6 +6,7 @@
 #include <winsock2.h>
 #include <iostream>
 #include <string>
+#include <vector>
 #include <ws2tcpip.h>
 #include <stdio.h>
 #include <errno.h>
@@ -68,6 +69,9 @@ int main()
 	char s[INET6_ADDRSTRLEN];
 	int rv;
 
+	std::vector< int > FD_Arr;
+	std::vector< std::string > Client_Names;
+
 	std::string serverName = "SERVER";
 
 	memset(&hints, 0, sizeof hints);
@@ -125,6 +129,8 @@ int main()
 			continue;
 		}
 
+		FD_Arr.push_back(new_fd);
+
 		inet_ntop(their_addr.ss_family,
 			get_in_addr((struct sockaddr *)&their_addr),
 			s, sizeof s);
@@ -132,11 +138,18 @@ int main()
 
 		closesocket(sockfd); // child doesn't need the listener
 
-		std::string WelcomeMSG = "Welcome to the server!";
-
-		if (send(new_fd, WelcomeMSG.c_str(), 30, 0) == -1) {
-			perror("send");
+		if ((numbytes = recv(new_fd, buf, MAXDATASIZE - 1, 0)) == -1) {
+			perror("recv");
+			system("pause");
+			exit(1);
 		}
+
+		buf[numbytes] = '\0';
+
+		Client_Names.push_back(buf);
+
+		printf("Client Name: '%s'\n", buf);
+
 		if (send(new_fd, serverName.c_str(), 30, 0) == -1) {
 			perror("send");
 		}
@@ -149,9 +162,17 @@ int main()
 	while (new_fd) {
 	MSG_SEND:
 		printf("Message: ");
-		std::string message = "";
-		std::getline(std::cin, message);
-		if (send(new_fd, message.c_str(), 30, 0) == -1)perror("send");
+		std::string message = "SERVER: ";
+
+		std::string input = "";
+		std::getline(std::cin, input);
+
+		message.append(input);
+
+		for (int i = 0; i < FD_Arr.size(); i++) {
+			if (send(FD_Arr[i], message.c_str(), 30, 0) == -1)perror("send");
+		}
+		
 		goto MSG_SEND;
 	}
 

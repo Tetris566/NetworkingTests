@@ -111,6 +111,8 @@ int main(int argc, char *argv[])
 
 	freeaddrinfo(servinfo); // all done with this structure
 
+	if (send(sockfd, username.c_str(), 30, 0) == -1)perror("send");
+
 	if ((numbytes = recv(sockfd, buf, MAXDATASIZE - 1, 0)) == -1) {
 		perror("recv");
 		system("pause");
@@ -127,12 +129,12 @@ int main(int argc, char *argv[])
 
 		buf[numbytes] = '\0';
 
-		printf("client: received '%s'\n", buf);
+		printf("%s \n", buf);
 		goto RCV_LOOP;
 	}
 	buf[numbytes] = '\0';
 
-	printf("client: received '%s'\n", buf);
+	printf("%s \n", buf);
 
 	closesocket(sockfd);
 	system("pause");
